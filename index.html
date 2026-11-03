@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Elite Papers Library — NEET Test Papers & Question Banks</title>
-<meta name="description" content="A free library of NEET test papers and question banks — papers with solutions clubbed onto their cards. No sign-up.">
+<meta name="description" content="A free library of NEET test papers and question banks — every paper with its solution clubbed onto the same card, where one exists. Nothing to install: search, open, practise.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
@@ -31,12 +31,27 @@
   .controls{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 18px 10px;z-index:20}
   .search{width:100%;font:inherit;font-size:16px;padding:11px 13px;border:2px solid var(--ink);border-radius:10px;background:#fff;color:var(--ink)}
   .search:focus{outline:3px solid var(--pink);outline-offset:1px}
-  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
-  .chip{font:inherit;font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer}
+  .effort{margin:14px 0 0;font-size:14.5px;opacity:.85;max-width:66ch}
+  .chips{display:flex;flex-wrap:nowrap;gap:7px;margin-top:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .chip{font:inherit;font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;flex:none;white-space:nowrap}
   .chip[aria-pressed="true"]{background:var(--ink);color:#fff}
   .chip .n{font-family:"Anonymous Pro",monospace;font-weight:400;opacity:.75}
   .chip.kind[aria-pressed="true"]{background:var(--indigo);border-color:var(--indigo)}
   .chip.solonly[aria-pressed="true"]{background:var(--rose);border-color:var(--rose)}
+  .chip.doneview[aria-pressed="true"]{background:var(--blue);border-color:var(--blue)}
+  .card.done{border-color:var(--blue);background:rgba(55,126,208,.06)}
+  .doneflag{font-family:"Sora",sans-serif;font-size:11px;font-weight:800;color:#fff;background:var(--blue);border-radius:6px;padding:3px 8px;letter-spacing:.5px}
+  .donebtn{font:inherit;font-weight:700;font-size:13.5px;border-radius:9px;padding:8px 13px;border:2px solid var(--blue);background:#fff;color:var(--blue);cursor:pointer}
+  .donebtn[aria-pressed="true"]{background:var(--blue);color:#fff}
+  #donebar{margin:0 0 12px}
+  #clearDone{font:inherit;font-weight:700;font-size:14px;background:#fff;color:var(--rose);border:2px solid var(--rose);border-radius:9px;padding:8px 14px;cursor:pointer}
+  .request{margin:28px 0 8px;border:2px solid var(--ink);border-radius:13px;padding:20px;background:var(--wash)}
+  .request h2{font-family:"Sora",sans-serif;font-size:21px;margin:0 0 8px}
+  .request p{margin:0 0 12px;font-size:15.5px;max-width:62ch}
+  .request .reqbtn{display:inline-block;background:var(--indigo);color:#fff;font-weight:700;font-size:15px;text-decoration:none;border-radius:9px;padding:11px 18px}
+  .request .reqnote{font-family:"Anonymous Pro",monospace;font-size:12.5px;opacity:.75;margin:10px 0 0}
+  #toTop{position:fixed;right:14px;bottom:14px;z-index:40;background:var(--ink);color:#fff;border:none;border-radius:999px;padding:11px 17px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;display:none;box-shadow:0 6px 20px rgba(52,50,59,.3)}
+  #toTop.show{display:block}
   main{padding:20px 18px 8px}
   .countline{font-family:"Anonymous Pro",monospace;font-size:13.5px;margin:2px 0 14px;opacity:.85}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px}
@@ -77,12 +92,13 @@
     <h1>Elite Papers <span class="accent">Library</span></h1>
     <p class="tagline">NEET test papers &amp; question banks — free for every aspirant. Papers carry their solutions on the same card.</p>
     <div class="stats" id="stats"></div>
+    <p class="effort">This library took months to put together — every paper hunted down from scattered corners of the internet, checked by hand, and matched to its solution one card at a time, so you never have to go hunting for any of it yourself.</p>
   </div>
 </header>
 
 <div class="support-strip">
   <div class="wrap">
-    <span><b>Free, complete, no sign-up.</b> If this library is worth something to you, give back what it's worth.</span>
+    <span><b>Free, complete, nothing to install.</b> If this library is worth something to you, give back what it's worth.</span>
     <a href="upi://pay?pa=sarthakyadav779@axl&amp;pn=SARTHAK%20YADAV">Give via UPI &rarr;</a>
   </div>
 </div>
@@ -98,14 +114,22 @@
 <main>
   <div class="wrap">
     <p class="countline" id="countline"></p>
+    <div id="donebar" hidden><button id="clearDone" type="button">Clear all done marks</button></div>
     <div class="grid" id="grid"></div>
     <p class="empty" id="empty" hidden>Nothing matches that. Loosen the search or clear a filter.</p>
+    <section class="request" id="request">
+      <h2>Can't find it? Ask.</h2>
+      <p>Looking for a test paper, a question bank, a book — anything for NEET that isn't here yet? Ask for it. If it exists, it gets hunted down and added to this library.</p>
+      <a class="reqbtn" href="https://github.com/Sarthak-2007/elite-papers-library/issues/new?title=Request%3A%20&amp;body=What%20I%20am%20looking%20for%3A%0A%0A%0ASeries%20/%20year%20/%20test%20%28if%20you%20know%20it%29%3A%0A%0A%0AAnything%20else%20%28where%20you%20saw%20it%2C%20a%20link%2C%20the%20date%29%3A%0A" target="_blank" rel="noopener">Request a resource &rarr;</a>
+      <p class="reqnote">Opens a short request form on GitHub — a free GitHub account is all you need to send it.</p>
+    </section>
   </div>
 </main>
 
 <footer>
   <div class="wrap">
     <p class="note">A free library of NEET test papers and question banks — every paper in one place, with its solution clubbed onto its card where one exists. No accounts, no paywall, nothing to install: search, open, practise.</p>
+    <p class="note" style="margin-top:10px">Your done marks live in this browser only, on this device — nothing is uploaded, and clearing your browser data clears them.</p>
     <div class="donate" id="support">
       <img src="donate-qr.png" alt="UPI QR code for giving back to this library" width="148" height="148">
       <div>
@@ -119,6 +143,8 @@
   </div>
 </footer>
 
+<button id="toTop" type="button" aria-label="Back to top">&uarr; Top</button>
+
 <div id="toast" role="status">
   <p>That one was free — the whole library is. If it was worth something to you, <a href="#support">give back what it's worth</a>.</p>
   <button id="toastClose" type="button">Dismiss</button>
@@ -126,8 +152,17 @@
 
 <script>
 const BASE = { a:'https://sarthak-2007.github.io/elite-papers-library-a/', b:'https://sarthak-2007.github.io/elite-papers-library-b/' };
-const state = { q:'', series:'all', kind:'all', solOnly:false };
+const state = { q:'', series:'all', kind:'all', solOnly:false, doneOnly:false };
 let DATA = [];
+
+const DONE_KEY = 'epl_done_v1';
+let doneSet = new Set();
+try{ doneSet = new Set(JSON.parse(localStorage.getItem(DONE_KEY) || '[]')); }catch(e){}
+function saveDone(){ try{ localStorage.setItem(DONE_KEY, JSON.stringify([...doneSet])); }catch(e){} }
+function updateDoneChip(){
+  const n = $('doneCount'); if (n) n.textContent = doneSet.size;
+  const c = $('doneChip'); if (c) c.setAttribute('aria-pressed', String(state.doneOnly));
+}
 
 const $ = (id) => document.getElementById(id);
 const fmtSize = (b) => b >= 1e6 ? (b/1e6).toFixed(1)+' MB' : Math.max(1, Math.round(b/1e3))+' KB';
@@ -147,17 +182,20 @@ function cardHTML(e){
   const sols = e.sols.map(s =>
     `<a class="btn sol" href="${BASE[s.h]}${s.f}" target="_blank" rel="noopener" data-open>${esc(s.label)}</a>`).join('');
   const meta = [e.p+' pages', fmtSize(e.b), e.date].filter(Boolean).join(' · ');
-  return `<article class="card">
+  const isDone = doneSet.has(e.f);
+  return `<article class="card${isDone ? ' done' : ''}">
     <div class="badges">
       <span class="tier" style="background:${e.tierColor}">${e.tier}</span>
       <span class="serieschip" style="background:${e.scolor}">${esc(e.sshort)}</span>
       <span class="kindlab">${esc(e.klabel)}</span>
+      ${isDone ? '<span class="doneflag">DONE</span>' : ''}
     </div>
     <h3 class="title">${esc(e.t)}</h3>
     <p class="meta">${esc(meta)}</p>
     <div class="btns">
       <a class="btn open" href="${BASE[e.h]}${e.f}" target="_blank" rel="noopener" data-open>Open</a>
       ${sols}
+      <button class="donebtn" type="button" data-done="${e.f}" aria-pressed="${isDone}">${isDone ? '&#10003; Done' : 'Mark done'}</button>
     </div>
   </article>`;
 }
@@ -168,13 +206,27 @@ function render(){
     if (state.series !== 'all' && e.s !== state.series) return false;
     if (state.kind !== 'all' && e.k !== state.kind) return false;
     if (state.solOnly && !e.sols.length) return false;
+    if (state.doneOnly && !doneSet.has(e.f)) return false;
     if (q && !(e.t+' '+e.sname+' '+e.date).toLowerCase().includes(q)) return false;
     return true;
   });
   $('grid').innerHTML = list.map(cardHTML).join('');
   $('empty').hidden = list.length > 0;
-  $('countline').textContent = 'Showing '+list.length+' of '+DATA.length+' entries';
+  if (list.length === 0) $('empty').textContent = state.doneOnly
+    ? 'Nothing here yet — tap "Mark done" on any paper and it will wait for you in this view.'
+    : 'Nothing matches that. Loosen the search or clear a filter.';
+  $('donebar').hidden = !(state.doneOnly && doneSet.size > 0);
+  $('countline').textContent = 'Showing '+list.length+' of '+DATA.length+' entries' +
+    (doneSet.size ? ' · '+doneSet.size+' marked done' : '');
   document.querySelectorAll('[data-open]').forEach(a => a.addEventListener('click', maybeToast));
+}
+
+function scrollToGrid(){
+  const c = document.querySelector('.controls');
+  const m = document.querySelector('main');
+  if (!m) return;
+  const y = m.getBoundingClientRect().top + window.scrollY - (c ? c.offsetHeight : 0) - 6;
+  if (window.scrollY > y) window.scrollTo({ top: Math.max(0, y), behavior:'smooth' });
 }
 
 function buildChips(){
@@ -188,11 +240,19 @@ function buildChips(){
     state.series = b.dataset.series;
     $('seriesChips').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x===b ? 'true':'false'));
     render();
+    scrollToGrid();
   }));
   const kinds = [['all','All types'],['paper','Papers'],['sol','Solutions & keys'],['bank','Banks & resources']];
   $('kindChips').innerHTML = kinds.map(([k,l]) =>
     `<button class="chip kind" data-kind="${k}" aria-pressed="${state.kind===k}">${l}</button>`).join('') +
-    `<button class="chip solonly" id="solOnly" aria-pressed="false">With solution only</button>`;
+    `<button class="chip solonly" id="solOnly" aria-pressed="false">With solution only</button>` +
+    `<button class="chip doneview" id="doneChip" aria-pressed="false">Done <span class="n" id="doneCount">0</span></button>`;
+  $('doneChip').addEventListener('click', () => {
+    state.doneOnly = !state.doneOnly;
+    updateDoneChip();
+    render();
+    if (state.doneOnly) scrollToGrid();
+  });
   $('kindChips').querySelectorAll('[data-kind]').forEach(b => b.addEventListener('click', () => {
     state.kind = b.dataset.kind;
     $('kindChips').querySelectorAll('[data-kind]').forEach(x => x.setAttribute('aria-pressed', x===b ? 'true':'false'));
@@ -210,11 +270,34 @@ fetch('catalog.json').then(r => r.json()).then(d => {
   const solCount = DATA.reduce((n,e) => n + e.sols.length, 0);
   const withSol = DATA.filter(e => e.sols.length).length;
   $('stats').innerHTML =
-    `<span><b>${DATA.length}</b> entries</span><span><b>${withSol}</b> papers with clubbed solutions</span><span><b>${solCount}</b> solution files</span><span><b>0</b> sign-ups</span>`;
+    `<span><b>${DATA.length}</b> entries</span><span><b>${withSol}</b> papers with clubbed solutions</span><span><b>${solCount}</b> solution files</span>`;
   buildChips();
+  updateDoneChip();
   render();
 }).catch(() => { $('countline').textContent = 'Could not load the catalogue.'; });
 $('q').addEventListener('input', (ev) => { state.q = ev.target.value; render(); });
+
+$('grid').addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-done]');
+  if (!b) return;
+  const id = b.dataset.done;
+  if (doneSet.has(id)) doneSet.delete(id); else doneSet.add(id);
+  saveDone();
+  updateDoneChip();
+  render();
+});
+$('clearDone').addEventListener('click', () => {
+  doneSet.clear();
+  saveDone();
+  updateDoneChip();
+  render();
+});
+
+const toTop = $('toTop');
+window.addEventListener('scroll', () => {
+  toTop.classList.toggle('show', window.scrollY > 700);
+}, { passive:true });
+toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 </script>
 </body>
 </html>
