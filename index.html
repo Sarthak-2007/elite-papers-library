@@ -240,7 +240,17 @@ function render(){
   $('countline').textContent = 'Showing '+list.length+' of '+DATA.length+' entries' +
     (doneSet.size ? ' · '+doneSet.size+' marked done' : '');
   updateFilterBadge();
-  document.querySelectorAll('[data-open]').forEach(a => a.addEventListener('click', maybeToast));
+  document.querySelectorAll('[data-open]').forEach(a => {
+    a.addEventListener('click', maybeToast);
+    a.addEventListener('click', () => {
+      try {
+        if (window.goatcounter && window.goatcounter.count) {
+          const p = new URL(a.href).pathname.split('/').pop().replace(/\.pdf$/i, '');
+          window.goatcounter.count({ path: 'open/' + p, event: true, title: 'Open: ' + p });
+        }
+      } catch (e) {}
+    });
+  });
 }
 
 function updateFilterBadge(){
@@ -358,5 +368,6 @@ window.addEventListener('scroll', () => {
 }, { passive:true });
 toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 </script>
+<script data-goatcounter="https://elitepapers.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
