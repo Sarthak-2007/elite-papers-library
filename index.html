@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elite Papers Library — NEET Test Papers & Question Banks</title>
+<meta name="description" content="A free library of NEET test papers and question banks — papers with solutions clubbed onto their cards. No sign-up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#34323B; --pink:#F04FCB; --indigo:#493EA4; --gold:#E2BC39;
+    --rose:#C84481; --orange:#E47E35; --blue:#377ED0;
+    --paper:#FFFFFF; --wash:rgba(52,50,59,.055); --line:rgba(52,50,59,.16);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.45}
+  a{color:var(--indigo)}
+  header{background:var(--ink);color:#fff;padding:34px 18px 26px}
+  .wrap{max-width:1060px;margin:0 auto}
+  h1{font-family:"Sora",sans-serif;font-weight:800;font-size:clamp(28px,5.4vw,44px);margin:0 0 6px;letter-spacing:.2px}
+  h1 .accent{color:var(--pink)}
+  .tagline{margin:0;font-size:clamp(15px,2.6vw,18px);opacity:.92}
+  .stats{margin-top:16px;font-family:"Anonymous Pro",monospace;font-size:14px;display:flex;flex-wrap:wrap;gap:8px 18px}
+  .stats b{color:var(--gold);font-weight:700}
+  .support-strip{background:var(--gold);color:var(--ink);padding:11px 18px;font-size:15px}
+  .support-strip .wrap{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;justify-content:space-between}
+  .support-strip a{color:var(--ink);font-weight:700}
+  .controls{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 18px 10px;z-index:20}
+  .search{width:100%;font:inherit;font-size:16px;padding:11px 13px;border:2px solid var(--ink);border-radius:10px;background:#fff;color:var(--ink)}
+  .search:focus{outline:3px solid var(--pink);outline-offset:1px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font:inherit;font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer}
+  .chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .chip .n{font-family:"Anonymous Pro",monospace;font-weight:400;opacity:.75}
+  .chip.kind[aria-pressed="true"]{background:var(--indigo);border-color:var(--indigo)}
+  .chip.solonly[aria-pressed="true"]{background:var(--rose);border-color:var(--rose)}
+  main{padding:20px 18px 8px}
+  .countline{font-family:"Anonymous Pro",monospace;font-size:13.5px;margin:2px 0 14px;opacity:.85}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px}
+  .card{border:1.5px solid var(--line);border-radius:13px;padding:14px 14px 13px;display:flex;flex-direction:column;gap:9px;background:#fff}
+  .card:hover{border-color:var(--ink)}
+  .badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .tier{font-family:"Sora",sans-serif;font-weight:800;font-size:12px;color:#fff;border-radius:6px;padding:2.5px 8px;letter-spacing:.4px}
+  .serieschip{font-size:11.5px;font-weight:700;color:#fff;border-radius:6px;padding:3px 8px;letter-spacing:.3px}
+  .kindlab{font-family:"Anonymous Pro",monospace;font-size:11px;letter-spacing:.6px;opacity:.75}
+  .title{font-family:"Sora",sans-serif;font-weight:700;font-size:16.5px;line-height:1.3;margin:0;overflow-wrap:anywhere}
+  .meta{font-family:"Anonymous Pro",monospace;font-size:12.5px;opacity:.8;margin:0}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+  .btn{font:inherit;font-weight:700;font-size:14.5px;text-decoration:none;border-radius:9px;padding:9px 16px;border:2px solid var(--ink);display:inline-block}
+  .btn.open{background:var(--ink);color:#fff}
+  .btn.sol{background:var(--indigo);border-color:var(--indigo);color:#fff}
+  .btn:active{transform:translateY(1px)}
+  .empty{padding:44px 10px;text-align:center;font-size:16px;opacity:.8}
+  footer{margin-top:34px;border-top:2px solid var(--ink);padding:24px 18px 40px;background:var(--wash)}
+  footer .note{font-size:15.5px;max-width:62ch}
+  .donate{margin-top:22px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:18px}
+  .donate img{width:148px;height:148px;flex:none}
+  .donate h2{font-family:"Sora",sans-serif;font-size:19px;margin:0 0 6px}
+  .donate p{margin:0 0 8px;font-size:15px;max-width:52ch}
+  .donate .upi-id{font-family:"Anonymous Pro",monospace;font-size:14.5px;font-weight:700}
+  .donate .paylink{display:inline-block;margin-top:4px;font-weight:700;background:var(--ink);color:#fff;text-decoration:none;border-radius:9px;padding:9px 16px}
+  .donate .apps{font-family:"Anonymous Pro",monospace;font-size:12.5px;opacity:.75;margin-top:8px}
+  #toast{position:fixed;left:12px;right:12px;bottom:12px;z-index:50;background:var(--ink);color:#fff;border-radius:12px;padding:13px 15px;display:none;box-shadow:0 8px 28px rgba(52,50,59,.35)}
+  #toast.show{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  #toast p{margin:0;font-size:14.5px;flex:1 1 260px}
+  #toast a{color:var(--gold);font-weight:700}
+  #toast button{font:inherit;font-weight:700;background:#fff;color:var(--ink);border:none;border-radius:8px;padding:7px 13px;cursor:pointer}
+  @media (max-width:560px){ .donate img{width:128px;height:128px} .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Elite Papers <span class="accent">Library</span></h1>
+    <p class="tagline">NEET test papers &amp; question banks — free for every aspirant. Papers carry their solutions on the same card.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<div class="support-strip">
+  <div class="wrap">
+    <span><b>Free, complete, no sign-up.</b> If this library is worth something to you, give back what it's worth.</span>
+    <a href="upi://pay?pa=sarthakyadav779@axl&amp;pn=SARTHAK%20YADAV">Give via UPI &rarr;</a>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="wrap">
+    <input class="search" id="q" type="search" placeholder="Search papers — try NBTS-01, SRG, Mock Test, a date…" aria-label="Search papers">
+    <div class="chips" id="seriesChips" role="group" aria-label="Filter by series"></div>
+    <div class="chips" id="kindChips" role="group" aria-label="Filter by type"></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <p class="countline" id="countline"></p>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>Nothing matches that. Loosen the search or clear a filter.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="note">A free library of NEET test papers and question banks — every paper in one place, with its solution clubbed onto its card where one exists. No accounts, no paywall, nothing to install: search, open, practise.</p>
+    <div class="donate" id="support">
+      <img src="donate-qr.png" alt="UPI QR code for giving back to this library" width="148" height="148">
+      <div>
+        <h2>Worth something to you?</h2>
+        <p>This library is free and stays free. If it was worth something to you, give back what it's worth to you — whatever that number is. It goes to keeping the collection complete and current.</p>
+        <p class="upi-id">UPI: sarthakyadav779@axl</p>
+        <a class="paylink" href="upi://pay?pa=sarthakyadav779@axl&amp;pn=SARTHAK%20YADAV">Give via UPI</a>
+        <p class="apps">Or scan the QR with any UPI app.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" role="status">
+  <p>That one was free — the whole library is. If it was worth something to you, <a href="#support">give back what it's worth</a>.</p>
+  <button id="toastClose" type="button">Dismiss</button>
+</div>
+
+<script>
+const BASE = { a:'https://sarthak-2007.github.io/elite-papers-library-a/', b:'https://sarthak-2007.github.io/elite-papers-library-b/' };
+const state = { q:'', series:'all', kind:'all', solOnly:false };
+let DATA = [];
+
+const $ = (id) => document.getElementById(id);
+const fmtSize = (b) => b >= 1e6 ? (b/1e6).toFixed(1)+' MB' : Math.max(1, Math.round(b/1e3))+' KB';
+
+function esc(s){ return s.replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function maybeToast(){
+  try{
+    if (sessionStorage.getItem('epl_giveback')) return;
+    sessionStorage.setItem('epl_giveback','1');
+  }catch(e){}
+  $('toast').classList.add('show');
+}
+$('toastClose').addEventListener('click', () => $('toast').classList.remove('show'));
+
+function cardHTML(e){
+  const sols = e.sols.map(s =>
+    `<a class="btn sol" href="${BASE[s.h]}${s.f}" target="_blank" rel="noopener" data-open>${esc(s.label)}</a>`).join('');
+  const meta = [e.p+' pages', fmtSize(e.b), e.date].filter(Boolean).join(' · ');
+  return `<article class="card">
+    <div class="badges">
+      <span class="tier" style="background:${e.tierColor}">${e.tier}</span>
+      <span class="serieschip" style="background:${e.scolor}">${esc(e.sshort)}</span>
+      <span class="kindlab">${esc(e.klabel)}</span>
+    </div>
+    <h3 class="title">${esc(e.t)}</h3>
+    <p class="meta">${esc(meta)}</p>
+    <div class="btns">
+      <a class="btn open" href="${BASE[e.h]}${e.f}" target="_blank" rel="noopener" data-open>Open</a>
+      ${sols}
+    </div>
+  </article>`;
+}
+
+function render(){
+  const q = state.q.trim().toLowerCase();
+  const list = DATA.filter(e => {
+    if (state.series !== 'all' && e.s !== state.series) return false;
+    if (state.kind !== 'all' && e.k !== state.kind) return false;
+    if (state.solOnly && !e.sols.length) return false;
+    if (q && !(e.t+' '+e.sname+' '+e.date).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  $('grid').innerHTML = list.map(cardHTML).join('');
+  $('empty').hidden = list.length > 0;
+  $('countline').textContent = 'Showing '+list.length+' of '+DATA.length+' entries';
+  document.querySelectorAll('[data-open]').forEach(a => a.addEventListener('click', maybeToast));
+}
+
+function buildChips(){
+  const seriesCounts = {};
+  DATA.forEach(e => seriesCounts[e.s] = (seriesCounts[e.s]||0)+1);
+  const order = [...new Set(DATA.map(e => e.s))];
+  const mk = (key, label, n) => `<button class="chip" data-series="${key}" aria-pressed="${state.series===key}">${label} <span class="n">${n}</span></button>`;
+  $('seriesChips').innerHTML = mk('all','All series', DATA.length) +
+    order.map(s => { const e0 = DATA.find(e => e.s===s); return mk(s, e0.sname, seriesCounts[s]); }).join('');
+  $('seriesChips').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    state.series = b.dataset.series;
+    $('seriesChips').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x===b ? 'true':'false'));
+    render();
+  }));
+  const kinds = [['all','All types'],['paper','Papers'],['sol','Solutions & keys'],['bank','Banks & resources']];
+  $('kindChips').innerHTML = kinds.map(([k,l]) =>
+    `<button class="chip kind" data-kind="${k}" aria-pressed="${state.kind===k}">${l}</button>`).join('') +
+    `<button class="chip solonly" id="solOnly" aria-pressed="false">With solution only</button>`;
+  $('kindChips').querySelectorAll('[data-kind]').forEach(b => b.addEventListener('click', () => {
+    state.kind = b.dataset.kind;
+    $('kindChips').querySelectorAll('[data-kind]').forEach(x => x.setAttribute('aria-pressed', x===b ? 'true':'false'));
+    render();
+  }));
+  $('solOnly').addEventListener('click', () => {
+    state.solOnly = !state.solOnly;
+    $('solOnly').setAttribute('aria-pressed', String(state.solOnly));
+    render();
+  });
+}
+
+fetch('catalog.json').then(r => r.json()).then(d => {
+  DATA = d;
+  const solCount = DATA.reduce((n,e) => n + e.sols.length, 0);
+  const withSol = DATA.filter(e => e.sols.length).length;
+  $('stats').innerHTML =
+    `<span><b>${DATA.length}</b> entries</span><span><b>${withSol}</b> papers with clubbed solutions</span><span><b>${solCount}</b> solution files</span><span><b>0</b> sign-ups</span>`;
+  buildChips();
+  render();
+}).catch(() => { $('countline').textContent = 'Could not load the catalogue.'; });
+$('q').addEventListener('input', (ev) => { state.q = ev.target.value; render(); });
+</script>
+</body>
+</html>
